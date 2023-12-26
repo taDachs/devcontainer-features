@@ -5,8 +5,7 @@ install_on_debian() {
   export DEBIAN_FRONTEND=noninteractive
 
   package_list="${package_list} \
-        tmux \
-        fzf"
+        tmux"
 
   apt-get update -y
   apt-get -y install --no-install-recommends ${package_list} 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 )

@@ -9,7 +9,6 @@ source dev-container-features-test-lib
 # Feature-specific tests
 # The 'check' command comes from the dev-container-features-test-lib. Syntax is...
 # check <LABEL> <cmd> [args...]
-check "execute command" bash -c "fzf --version || false"
 check "execute command" bash -c "tmux -V || false"
 
 # Report results
