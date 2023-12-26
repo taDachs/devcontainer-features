@@ -1,0 +1,10 @@
+{
+    "name": "My Dotfiles",
+    "id": "my-dotfiles",
+    "version": "0.0.1",
+    "description": "A feature to install my dotfiles",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
