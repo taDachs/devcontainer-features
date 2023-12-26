@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+USERNAME="${USERNAME:-"root"}"
+
 install_on_debian() {
   export DEBIAN_FRONTEND=noninteractive
 
