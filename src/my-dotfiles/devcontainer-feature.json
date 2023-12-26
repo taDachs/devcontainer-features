@@ -1,7 +1,7 @@
 {
     "name": "My Dotfiles",
     "id": "my-dotfiles",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A feature to install my dotfiles",
     "options": {
       "username": {
