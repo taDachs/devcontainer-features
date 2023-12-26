@@ -4,11 +4,12 @@ set -e
 install_on_debian() {
   export DEBIAN_FRONTEND=noninteractive
 
+  package_list="${package_list} \
+        tmux \
+        fzf"
+
   apt-get update -y
-  apt-get install -y software-properties-common
-  add-apt-repository ppa:neovim-ppa/unstable -y
-  apt-get update -y
-  apt-get install -y neovim
+  apt-get -y install --no-install-recommends ${package_list} 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 )
   rm -rf /var/lib/apt/lists/*
 }
 

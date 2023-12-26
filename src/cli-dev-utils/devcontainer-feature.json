@@ -1,0 +1,10 @@
+{
+    "name": "CLI Development Utilities",
+    "id": "cli-dev-utils",
+    "version": "0.0.1",
+    "description": "A feature to install utilities for a cli focused workflow",
+    "options": {},
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
