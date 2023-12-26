@@ -15,7 +15,7 @@ A feature to install my dotfiles
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-
+| username | Enter name of a user to configure | string | root |
 
 
 
