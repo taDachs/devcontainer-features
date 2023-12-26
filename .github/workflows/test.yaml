@@ -16,7 +16,6 @@ jobs:
           - neovim
           - cli-dev-utils
         baseImage:
-          - debian:latest
           - ubuntu:latest
           - mcr.microsoft.com/devcontainers/base:ubuntu
     steps:
