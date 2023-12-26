@@ -9,8 +9,7 @@ install_on_debian() {
   package_list="${package_list} \
         stow \
         git \
-        ca-certificates \
-        fzf"
+        ca-certificates"
 
   apt-get update -y
   apt-get -y install --no-install-recommends ${package_list} 2> >( grep -v 'debconf: delaying package configuration, since apt-utils is not installed' >&2 )
@@ -31,6 +30,7 @@ install_on_debian() {
 
   su - ${USERNAME} -c "git clone 'https://github.com/taDachs/.punktdateien.git' "${user_home}/.punktdateien" \
                     && cd ${user_home}/.punktdateien && bash ./install.bash"
+  su - ${USERNAME} - "zsh -c 'source $HOME/.zshrc'"
 }
 
 # ******************
