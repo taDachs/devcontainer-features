@@ -28,9 +28,7 @@ install_on_debian() {
   fi
 
   git clone 'https://github.com/taDachs/.punktdateien.git' "${user_home}/.punktdateien"
-  pushd "${user_home}/.punktdateien"
-  bash ./install.bash
-  popd
+  su - ${USERNAME} -c "cd ${user_home}/.punktdateien && bash ./install.bash"
 }
 
 # ******************
