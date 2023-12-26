@@ -30,7 +30,7 @@ install_on_debian() {
 
   su - ${USERNAME} -c "git clone 'https://github.com/taDachs/.punktdateien.git' "${user_home}/.punktdateien" \
                     && cd ${user_home}/.punktdateien && bash ./install.bash"
-  su - ${USERNAME} - "zsh -c \"source ${user_home}/.zshrc\""
+  su - ${USERNAME} -c "zsh -c \"source ${user_home}/.zshrc\""
 }
 
 # ******************
