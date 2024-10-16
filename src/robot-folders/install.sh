@@ -6,19 +6,13 @@ install_on_debian() {
 
   apt-get update -y
   apt-get install -y pipx python3-venv git
+  export PIPX_HOME=/opt/pipx
+  export PIPX_BIN_DIR=/usr/local/bin
   pipx install robot-folders
   rm -rf /var/lib/apt/lists/*
 
-  if [ -f "${HOME}/.local/pipx/venvs/robot-folders/bin/rob_folders_source.sh" ]; then
-    ROBOT_FOLDERS_PATH="${HOME}/.local/pipx/venvs/robot-folders"
-  elif [ -f "${HOME}/.local/share/pipx/venvs/robot-folders/bin/rob_folders_source.sh" ]; then
-    ROBOT_FOLDERS_PATH="${HOME}/.local/share/pipx/venv/robot-folders"
-  else
-      echo "robot-folders source script not found in either location."
-      exit 1
-  fi
+  ROBOT_FOLDERS_PATH=/opt/pipx/venvs/robot-folders
 
-  echo "export PATH=${HOME}:/.local/bin:${PATH}" >> /source-robot-folders
   echo "source ${ROBOT_FOLDERS_PATH}/bin/rob_folders_source.sh" >> /source-robot-folders
   chmod +x /source-robot-folders
   echo "source /source-robot-folders" >> ${HOME}/.bashrc
