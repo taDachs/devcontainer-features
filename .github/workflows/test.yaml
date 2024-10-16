@@ -14,7 +14,6 @@ jobs:
       matrix:
         features:
           - neovim
-          - cli-dev-utils
         baseImage:
           - ubuntu:latest
           - mcr.microsoft.com/devcontainers/base:ubuntu
@@ -34,7 +33,6 @@ jobs:
       matrix:
         features:
           - neovim
-          - cli-dev-utils
     steps:
       - uses: actions/checkout@v3
 
