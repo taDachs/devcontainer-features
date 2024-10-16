@@ -1,0 +1,19 @@
+{
+  "name": "OpenVDB",
+  "id": "openvdb",
+  "version": "0.0.3",
+  "description": "A feature to install the openvdb library",
+  "options": {
+    "tag": {
+      "type": "string",
+      "default": "v10.1.0",
+      "description": "Version to pick for openvdb"
+    },
+    "nproc": {
+      "type": "string",
+      "default": "8",
+      "description": "Number of jobs for make"
+    }
+  },
+  "installsAfter": []
+}
