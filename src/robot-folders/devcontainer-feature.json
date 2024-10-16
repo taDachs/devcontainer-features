@@ -1,0 +1,8 @@
+{
+    "name": "robot-folders",
+    "id": "robot-folders",
+    "version": "0.0.1",
+    "description": "A feature to install robot-folders",
+    "options": {},
+    "installsAfter": []
+}
