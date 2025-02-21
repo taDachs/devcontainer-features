@@ -11,7 +11,7 @@
     },
     "nproc": {
       "type": "string",
-      "default": "8",
+      "default": "1",
       "description": "Number of jobs for make"
     }
   },
