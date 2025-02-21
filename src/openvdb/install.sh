@@ -5,7 +5,7 @@ install_on_debian() {
   export DEBIAN_FRONTEND=noninteractive
 
   apt-get update -y
-  apt-get install -y libboost-iostreams-dev libblosc-dev libtbb-dev cmake git build-essential g++
+  apt-get install -y libboost-iostreams-dev libblosc-dev libtbb-dev cmake git build-essential g++ zlib1g-dev
   rm -rf /var/lib/apt/lists/*
 
   cd /tmp
