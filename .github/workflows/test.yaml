@@ -14,6 +14,8 @@ jobs:
       matrix:
         features:
           - neovim
+          - robot-folders
+          - openvdb
         baseImage:
           - ubuntu:latest
           - mcr.microsoft.com/devcontainers/base:ubuntu
@@ -33,6 +35,8 @@ jobs:
       matrix:
         features:
           - neovim
+          - openvdb
+          - robot-folders
     steps:
       - uses: actions/checkout@v3
 
