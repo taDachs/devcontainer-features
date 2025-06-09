@@ -1,8 +1,19 @@
 {
-    "name": "Neovim",
-    "id": "neovim",
-    "version": "0.0.3",
-    "description": "A feature to install the Neovim text-editor",
-    "options": {},
-    "installsAfter": []
+  "name": "Neovim",
+  "id": "neovim",
+  "version": "0.0.4",
+  "description": "A feature to install the Neovim text-editor",
+  "options": {
+    "tag": {
+      "type": "string",
+      "default": "master",
+      "description": "Tag to use for git repo"
+    },
+    "use_ppa": {
+      "type": "bool",
+      "default": "true",
+      "description": "if true, uses the (unstable) ppa for installation"
+    }
+  },
+  "installsAfter": []
 }

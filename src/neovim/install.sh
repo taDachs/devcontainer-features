@@ -2,6 +2,15 @@
 set -e
 
 install_on_debian() {
+    # if USE_PPA is true, install using ppa, else compile from source
+    if [[ "${USE_PPA}" == "true" ]]; then
+        install_ppa_on_debian
+    else
+        install_from_source_on_debian
+    fi
+}
+
+install_ppa_on_debian() {
   export DEBIAN_FRONTEND=noninteractive
 
   apt-get update -y
@@ -10,6 +19,20 @@ install_on_debian() {
   apt-get update -y
   apt-get install -y neovim
   rm -rf /var/lib/apt/lists/*
+}
+
+install_from_source_on_debian() {
+  export DEBIAN_FRONTEND=noninteractive
+
+  apt-get update -y
+  apt-get install -y ninja-build gettext cmake curl build-essential git
+
+  cd /tmp/
+  git clone https://github.com/neovim/neovim.git
+  cd neovim
+  git checkout ${TAG}
+  make CMAKE_BUILD_TYPE=Release
+  make install
 }
 
 # ******************
