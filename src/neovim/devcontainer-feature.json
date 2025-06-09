@@ -11,7 +11,7 @@
     },
     "use_ppa": {
       "type": "boolean",
-      "default": "true",
+      "default": true,
       "description": "if true, uses the (unstable) ppa for installation"
     }
   },
