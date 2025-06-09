@@ -15,7 +15,8 @@ A feature to install the Neovim text-editor
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-
+| tag | Tag to use for git repo | string | master |
+| use_ppa | if true, uses the (unstable) ppa for installation | boolean | true |
 
 
 
