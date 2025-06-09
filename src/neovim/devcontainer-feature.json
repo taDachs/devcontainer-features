@@ -10,7 +10,7 @@
       "description": "Tag to use for git repo"
     },
     "use_ppa": {
-      "type": "bool",
+      "type": "boolean",
       "default": "true",
       "description": "if true, uses the (unstable) ppa for installation"
     }
