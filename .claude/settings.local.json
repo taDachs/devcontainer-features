@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C /home/max/development/devcontainer-stuff/devcontainer-features log --oneline)",
+      "Bash(git -C /home/max/development/devcontainer-stuff/devcontainer-features log --all --oneline --graph)",
+      "WebFetch(domain:pypi.org)",
+      "WebFetch(domain:hub.docker.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.ros.org)",
+      "WebFetch(domain:www.ros.org)",
+      "Bash(devcontainer features:*)",
+      "Bash(grep -E \"\\\\.sh$\")",
+      "Bash(grep -h ^install_on /home/max/development/devcontainer-stuff/devcontainer-features/src/*/install.sh)",
+      "Bash(/tmp/final_check.txt:*)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

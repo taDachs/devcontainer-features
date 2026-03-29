@@ -1,18 +1,24 @@
 {
   "name": "Neovim",
   "id": "neovim",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "A feature to install the Neovim text-editor",
   "options": {
-    "tag": {
+    "install_method": {
       "type": "string",
-      "default": "master",
-      "description": "Tag to use for git repo"
+      "enum": ["ppa", "source", "apt"],
+      "default": "ppa",
+      "description": "Installation method: 'ppa' adds a PPA repository, 'source' builds from git, 'apt' installs from default Ubuntu repositories"
     },
-    "use_ppa": {
-      "type": "boolean",
-      "default": true,
-      "description": "if true, uses the (unstable) ppa for installation"
+    "version": {
+      "type": "string",
+      "default": "stable",
+      "description": "Git tag to build from when install_method is 'source' (e.g. 'stable', 'v0.9.5', 'master')"
+    },
+    "ppa": {
+      "type": "string",
+      "default": "ppa:neovim-ppa/unstable",
+      "description": "PPA to add when install_method is 'ppa'"
     }
   },
   "installsAfter": []

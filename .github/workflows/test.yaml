@@ -15,10 +15,12 @@ jobs:
         features:
           - neovim
           - robot-folders
-          - openvdb
         baseImage:
-          - ubuntu:latest
-          - mcr.microsoft.com/devcontainers/base:ubuntu
+          - ubuntu:22.04
+          - ubuntu:24.04
+          - ros:humble-ros-base
+          - ros:jazzy-ros-base
+          - ros:rolling-ros-base
     steps:
       - uses: actions/checkout@v3
 
@@ -35,7 +37,6 @@ jobs:
       matrix:
         features:
           - neovim
-          - openvdb
           - robot-folders
     steps:
       - uses: actions/checkout@v3

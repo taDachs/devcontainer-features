@@ -1,21 +1,39 @@
 #!/bin/bash
 set -e
 
+# Append $2 to shell rc file $1 if not already present.
+append_to_rc() {
+    if ! grep -qF "rob_folders_source.sh" "$1" 2>/dev/null; then
+        echo "$2" >> "$1"
+    fi
+}
+
 install_on_debian() {
-  export DEBIAN_FRONTEND=noninteractive
+    export DEBIAN_FRONTEND=noninteractive
+    apt-get update -y
+    apt-get install -y pipx python3-venv git zsh
+    rm -rf /var/lib/apt/lists/*
 
-  apt-get update -y
-  apt-get install -y pipx python3-venv git
-  export PIPX_HOME=/opt/pipx
-  export PIPX_BIN_DIR=/usr/local/bin
-  pipx install robot-folders
-  rm -rf /var/lib/apt/lists/*
+    export PIPX_HOME=/opt/pipx
+    export PIPX_BIN_DIR=/usr/local/bin
 
-  ROBOT_FOLDERS_PATH=/opt/pipx/venvs/robot-folders
+    if ! pipx show robot-folders >/dev/null 2>&1; then
+        pipx install robot-folders
+    fi
 
-  echo "source ${ROBOT_FOLDERS_PATH}/bin/rob_folders_source.sh" >> /source-robot-folders
-  chmod +x /source-robot-folders
-  echo "source /source-robot-folders" >> ${HOME}/.bashrc
+    ROB_SOURCE="${PIPX_HOME}/venvs/robot-folders/bin/rob_folders_source.sh"
+    ROB_SOURCE_LINE="[ -f '${ROB_SOURCE}' ] && source '${ROB_SOURCE}'"
+
+    append_to_rc /etc/bash.bashrc "${ROB_SOURCE_LINE}"
+
+    # /etc/zsh/zshrc is the system-wide rc file on Debian/Ubuntu.
+    mkdir -p /etc/zsh
+    append_to_rc /etc/zsh/zshrc "${ROB_SOURCE_LINE}"
+
+    # fzirob is a shell function defined in rob_folders_source.sh, not a pipx entry
+    # point. Wrap it as an executable so it is available in PATH without sourcing.
+    printf '#!/bin/bash\nset -e\nsource %s\nfzirob "$@"\n' "${ROB_SOURCE}" > /usr/local/bin/fzirob
+    chmod +x /usr/local/bin/fzirob
 }
 
 # ******************

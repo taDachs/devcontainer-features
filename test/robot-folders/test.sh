@@ -1,47 +1,15 @@
 #!/bin/bash
-
-# This test file will be executed against an auto-generated devcontainer.json that
-# includes the 'hello' Feature with no options.
-#
-# For more information, see: https://github.com/devcontainers/cli/blob/main/docs/features/test.md
-#
-# Eg:
-# {
-#    "image": "<..some-base-image...>",
-#    "features": {
-#      "hello": {}
-#    },
-#    "remoteUser": "root"
-# }
-#
-# Thus, the value of all options will fall back to the default value in 
-# the Feature's 'devcontainer-feature.json'.
-# For the 'hello' feature, that means the default favorite greeting is 'hey'.
-#
-# These scripts are run as 'root' by default. Although that can be changed
-# with the '--remote-user' flag.
-# 
-# This test can be run with the following command:
-#
-#    devcontainer features test \ 
-#                   --features hello   \
-#                   --remote-user root \
-#                   --skip-scenarios   \
-#                   --base-image mcr.microsoft.com/devcontainers/base:ubuntu \
-#                   /path/to/this/repo
-
 set -e
 
-# Optional: Import test library bundled with the devcontainer CLI
-# See https://github.com/devcontainers/cli/blob/HEAD/docs/features/test.md#dev-container-features-test-lib
-# Provides the 'check' and 'reportResults' commands.
 source dev-container-features-test-lib
 
-# Feature-specific tests
-# The 'check' command comes from the dev-container-features-test-lib. Syntax is...
-# check <LABEL> <cmd> [args...]
-check "execute command" bash -c "source /source-robot-folders; fzirob || false"
+ROB_SOURCE=/opt/pipx/venvs/robot-folders/bin/rob_folders_source.sh
 
-# Report results
-# If any of the checks above exited with a non-zero exit code, the test will fail.
+check "fzirob is in PATH" which fzirob
+check "rob_folders_source.sh exists" test -f "${ROB_SOURCE}"
+check "fzirob is available after sourcing" bash -c "source ${ROB_SOURCE} && command -v fzirob > /dev/null"
+check "shell integration registered in bash.bashrc" grep -qF "rob_folders_source.sh" /etc/bash.bashrc
+check "shell integration registered in zshrc" grep -qF "rob_folders_source.sh" /etc/zsh/zshrc
+check "fzirob available in zsh" zsh -c "source /etc/zsh/zshrc && command -v fzirob > /dev/null"
+
 reportResults

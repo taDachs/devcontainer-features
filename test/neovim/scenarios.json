@@ -1,0 +1,19 @@
+{
+  "install_from_source": {
+    "image": "ubuntu:22.04",
+    "features": {
+      "neovim": {
+        "install_method": "source",
+        "version": "stable"
+      }
+    }
+  },
+  "install_from_apt": {
+    "image": "ubuntu:22.04",
+    "features": {
+      "neovim": {
+        "install_method": "apt"
+      }
+    }
+  }
+}
