@@ -1,0 +1,16 @@
+{
+  "name": "Claude Code",
+  "id": "claude-code",
+  "version": "0.1.0",
+  "description": "Installs the Claude Code CLI",
+  "options": {
+    "version": {
+      "type": "string",
+      "default": "latest",
+      "description": "npm version to install (e.g. 'latest', '1.0.58')"
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/node"
+  ]
+}
