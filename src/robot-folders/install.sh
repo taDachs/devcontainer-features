@@ -14,21 +14,57 @@ install_on_debian() {
     apt-get install -y pipx python3-venv git zsh
     rm -rf /var/lib/apt/lists/*
 
-    export PIPX_HOME=/opt/pipx
-    export PIPX_BIN_DIR=/usr/local/bin
-
-    if ! pipx show robot-folders >/dev/null 2>&1; then
-        pipx install robot-folders
+    # Prefer installing for the non-root remote user when one exists. This keeps
+    # the venv in the user's home and avoids touching global rc files.
+    TARGET_USER="${_REMOTE_USER:-}"
+    [ -z "${TARGET_USER}" ] || [ "${TARGET_USER}" = "root" ] && TARGET_USER="${_CONTAINER_USER:-root}"
+    # Guard against _REMOTE_USER being set to a user that doesn't exist yet.
+    if [ "${TARGET_USER}" != "root" ] && ! getent passwd "${TARGET_USER}" >/dev/null 2>&1; then
+        echo "Warning: user '${TARGET_USER}' not found, falling back to root install."
+        TARGET_USER="root"
     fi
 
-    ROB_SOURCE="${PIPX_HOME}/venvs/robot-folders/bin/rob_folders_source.sh"
-    ROB_SOURCE_LINE="[ -f '${ROB_SOURCE}' ] && source '${ROB_SOURCE}'"
+    if [ "${TARGET_USER}" != "root" ]; then
+        TARGET_HOME=$(getent passwd "${TARGET_USER}" | cut -d: -f6)
 
-    append_to_rc /etc/bash.bashrc "${ROB_SOURCE_LINE}"
+        if ! su - "${TARGET_USER}" -c "pipx show robot-folders >/dev/null 2>&1"; then
+            su - "${TARGET_USER}" -c "pipx install robot-folders"
+        fi
 
-    # /etc/zsh/zshrc is the system-wide rc file on Debian/Ubuntu.
-    mkdir -p /etc/zsh
-    append_to_rc /etc/zsh/zshrc "${ROB_SOURCE_LINE}"
+        # Locate rob_folders_source.sh — path varies by pipx version.
+        ROB_SOURCE=$(find "${TARGET_HOME}/.local" -name "rob_folders_source.sh" 2>/dev/null | head -1)
+        ROB_SOURCE_LINE="[ -f '${ROB_SOURCE}' ] && source '${ROB_SOURCE}'"
+
+        append_to_rc "${TARGET_HOME}/.bashrc" "${ROB_SOURCE_LINE}"
+
+        touch "${TARGET_HOME}/.zshrc"
+        chown "${TARGET_USER}:${TARGET_USER}" "${TARGET_HOME}/.zshrc"
+        append_to_rc "${TARGET_HOME}/.zshrc" "${ROB_SOURCE_LINE}"
+
+        # Ensure ~/.local/bin (where pipx puts rob) is in the user's PATH.
+        if ! grep -qF ".local/bin" "${TARGET_HOME}/.bashrc" 2>/dev/null; then
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "${TARGET_HOME}/.bashrc"
+        fi
+        if ! grep -qF ".local/bin" "${TARGET_HOME}/.zshrc" 2>/dev/null; then
+            echo 'export PATH="$HOME/.local/bin:$PATH"' >> "${TARGET_HOME}/.zshrc"
+        fi
+    else
+        export PIPX_HOME=/opt/pipx
+        export PIPX_BIN_DIR=/usr/local/bin
+
+        if ! pipx show robot-folders >/dev/null 2>&1; then
+            pipx install robot-folders
+        fi
+
+        ROB_SOURCE="${PIPX_HOME}/venvs/robot-folders/bin/rob_folders_source.sh"
+        ROB_SOURCE_LINE="[ -f '${ROB_SOURCE}' ] && source '${ROB_SOURCE}'"
+
+        append_to_rc /etc/bash.bashrc "${ROB_SOURCE_LINE}"
+
+        # /etc/zsh/zshrc is the system-wide rc file on Debian/Ubuntu.
+        mkdir -p /etc/zsh
+        append_to_rc /etc/zsh/zshrc "${ROB_SOURCE_LINE}"
+    fi
 
     # fzirob is a shell function defined in rob_folders_source.sh, not a pipx entry
     # point. Wrap it as an executable so it is available in PATH without sourcing.

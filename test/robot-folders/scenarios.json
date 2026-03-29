@@ -1,0 +1,12 @@
+{
+  "non-root-user": {
+    "image": "ubuntu:22.04",
+    "remoteUser": "ubuntu",
+    "features": {
+      "ghcr.io/devcontainers/features/common-utils:2": {
+        "username": "ubuntu"
+      },
+      "robot-folders": {}
+    }
+  }
+}
