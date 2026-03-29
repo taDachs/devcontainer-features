@@ -1,0 +1,14 @@
+{
+  "name": "locale",
+  "id": "locale",
+  "version": "0.1.0",
+  "description": "Generates and sets a system locale",
+  "options": {
+    "locale": {
+      "type": "string",
+      "default": "en_US.UTF-8",
+      "description": "Locale to generate and set as system default (e.g. 'en_US.UTF-8', 'de_DE.UTF-8')"
+    }
+  },
+  "installsAfter": []
+}
