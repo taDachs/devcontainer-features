@@ -15,8 +15,9 @@ A feature to install the Neovim text-editor
 
 | Options Id | Description | Type | Default Value |
 |-----|-----|-----|-----|
-| tag | Tag to use for git repo | string | master |
-| use_ppa | if true, uses the (unstable) ppa for installation | boolean | true |
+| install_method | Installation method: 'ppa' adds a PPA repository, 'source' builds from git, 'apt' installs from default Ubuntu repositories | string | ppa |
+| version | Git tag to build from when install_method is 'source' (e.g. 'stable', 'v0.9.5', 'master') | string | stable |
+| ppa | PPA to add when install_method is 'ppa' | string | ppa:neovim-ppa/unstable |
 
 
 
